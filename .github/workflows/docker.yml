@@ -49,6 +49,15 @@ jobs:
         with:
           packages: git curl wget
 
+      - name: get short hash
+        run: |
+          mkdir -p ${{ github.workspace }}/temp/
+          cd ${{ github.workspace }}/temp/
+          git clone https://github.com/devld/go-drive.git
+          cd ${{ github.workspace }}/temp/go-drive/
+          git reset --hard ${{ inputs.go_drive_commit_id }}
+          echo "go_drive_build_version=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
+
       #- name: init
       #  run: |
       #    cp -rf ${{ github.workspace }}/conf/* ${{ github.workspace }}/mainline/
@@ -98,8 +107,10 @@ jobs:
           push: ${{ inputs.release_archives }}
           provenance: false
           tags: |
+            ${{ secrets.DOCKERHUB_USERNAME }}/go-drive:${{ env.go_drive_build_version }}-alpine
             ${{ secrets.DOCKERHUB_USERNAME }}/go-drive:alpine
             ${{ secrets.DOCKERHUB_USERNAME }}/go-drive:latest
+            ghcr.io/${{ env.ACTOR_LC }}/go-drive:${{ env.go_drive_build_version }}-alpine
             ghcr.io/${{ env.ACTOR_LC }}/go-drive:alpine
             ghcr.io/${{ env.ACTOR_LC }}/go-drive:latest
           cache-from: type=registry,ref=ghcr.io/${{ env.ACTOR_LC }}/go-drive:latest

@@ -55,7 +55,7 @@ jobs:
           cd ${{ github.workspace }}/temp/
           git clone https://github.com/devld/go-drive.git
           cd ${{ github.workspace }}/temp/go-drive/
-          git reset --hard ${{ inputs.go_drive_commit_id }}
+          git checkout --force --quiet ${{ inputs.go_drive_commit_id }}
           echo "go_drive_build_version=$(git rev-parse --short HEAD)" >> "$GITHUB_ENV"
 
       #- name: init

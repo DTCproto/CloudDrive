@@ -154,5 +154,7 @@ jobs:
             ghcr.io/${{ needs.pre.outputs.ACTOR_LC }}/go-drive:${{ env.go_drive_build_version }}-alpine
             ghcr.io/${{ needs.pre.outputs.ACTOR_LC }}/go-drive:alpine
             ghcr.io/${{ needs.pre.outputs.ACTOR_LC }}/go-drive:latest
-          cache-from: type=registry,ref=ghcr.io/${{ needs.pre.outputs.ACTOR_LC }}/go-drive:buildcache
-          cache-to: type=registry,ref=ghcr.io/${{ needs.pre.outputs.ACTOR_LC }}/go-drive:buildcache,mode=max
+          #cache-from: type=registry,ref=ghcr.io/${{ needs.pre.outputs.ACTOR_LC }}/go-drive:buildcache
+          #cache-to: type=registry,ref=ghcr.io/${{ needs.pre.outputs.ACTOR_LC }}/go-drive:buildcache,mode=max
+          # 完全禁用缓存(二选一)
+          no-cache: true

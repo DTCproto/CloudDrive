@@ -38,11 +38,16 @@ RUN set -eux; \
 	cd ${GO_DRIVE_BUILD_ROOT}; \
 	mkdir -p ${GO_DRIVE_BUILD_ROOT}/build; \
 	CGO_CFLAGS="-Wno-return-local-addr -D_LARGEFILE64_SOURCE" \
-	go build -o build/go-drive -ldflags " \
+	go build -o build/go-drive \
+		-trimpath \
+		-buildvcs=false \
+		-gcflags="all=-l=4" \
+		-ldflags " \
 		-w -s \
 		-X 'go-drive/common.Version=${GO_DRIVE_COMMON_VERSION}' \
 		-X 'go-drive/common.RevHash=${GO_DRIVE_COMMON_REV_HASH}' \
-		-X 'go-drive/common.BuildAt=${GO_DRIVE_COMMON_BUILD_AT}'"; \
+		-X 'go-drive/common.BuildAt=${GO_DRIVE_COMMON_BUILD_AT}' \
+		-buildid="; \
 	### copy
 	mkdir -p /app/data; \
 	cd ${GO_DRIVE_BUILD_ROOT}; \

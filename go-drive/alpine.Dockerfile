@@ -127,6 +127,11 @@ RUN set -eux; \
 COPY --from=server-builder /app /app
 COPY --from=web-builder /app/web /app/web
 
+ENV TZ=Asia/Shanghai
+ENV LC_TIME=C.UTF-8
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
+
 LABEL \
 	description="go-drive" \
     maintainer="Custom Auto Build"
